@@ -3,10 +3,12 @@ package com.lsy.justForTrip.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lsy.justForTrip.domain.CommonDomain;
@@ -17,16 +19,22 @@ import com.lsy.justForTrip.service.ExchangeRateService;
 @RequestMapping("/exchangeRates")
 public class ExchangeRateController {
 
-	private ExchangeRateService exchangeRateService;
+	@Autowired private ExchangeRateService exchangeRateService;
 	
-	@Autowired
-    public void setExchangeRateService(ExchangeRateService exchangeRateService) {
-        this.exchangeRateService = exchangeRateService;
-    }
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
-	@ResponseBody
 	public List<ExchangeRate> getExchangeList (@RequestParam(required=false) CommonDomain domain) {
 		return exchangeRateService.getExchangeRates(domain);
+	}
+	
+	@RequestMapping(value="", method=RequestMethod.POST)
+	public ResponseEntity<Object> addExchangeList (@RequestBody ExchangeRate exchangeRate) {
+		
+		if (exchangeRateService.saveExchangeRate(exchangeRate)) {
+			return new ResponseEntity<>(HttpStatus.CREATED);
+		} else {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+			
 	}
 }

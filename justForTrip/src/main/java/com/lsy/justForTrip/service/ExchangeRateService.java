@@ -19,11 +19,18 @@ public class ExchangeRateService {
 		this.exchangeRateRepository = exchangeRateRepository;
 	}
 	
-	public ExchangeRate saveExchangeRate(ExchangeRate exchangeRate) {
-		return exchangeRateRepository.save(exchangeRate);
+	public boolean saveExchangeRate(ExchangeRate exchangeRate) {
+		
+		if (exchangeRateRepository.save(exchangeRate) == null) {
+			return false;
+		} else {
+			return true;
+		}
+		
 	}
 	
 	public List<ExchangeRate> getExchangeRates(CommonDomain domain) {
 		return (List<ExchangeRate>) exchangeRateRepository.findAll();
 	}
+
 }

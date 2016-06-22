@@ -1,5 +1,7 @@
 package com.lsy.justForTrip.domain;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,6 +22,7 @@ public class ExchangeRate {
 	private Double aud;
 	private Double thb;
 	private Double cny;
+	private Date inDate = new Date();
 	
 	public Integer getId() {
 		return id;
@@ -75,11 +78,16 @@ public class ExchangeRate {
 	public void setCny(Double cny) {
 		this.cny = cny;
 	}
+	public Date getInDate() {
+		return inDate;
+	}
+	public void setInDate(Date inDate) {
+		this.inDate = inDate;
+	}
 	
 	@Override
 	public String toString() {
 		return "ExchangeRate [id=" + id + ", usd=" + usd + ", jpy=" + jpy + ", eur=" + eur + ", gbp=" + gbp + ", cad="
-				+ cad + ", aud=" + aud + ", thb=" + thb + ", cny=" + cny + "]";
+				+ cad + ", aud=" + aud + ", thb=" + thb + ", cny=" + cny + ", inDate=" + inDate + "]";
 	}
-	
 }
